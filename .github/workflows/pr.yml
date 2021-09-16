@@ -32,9 +32,6 @@ jobs:
       with:
           r-version: '4.1.1'
     
-    - name: find home
-      run: |
-          R --print-home
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
