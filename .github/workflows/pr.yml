@@ -23,7 +23,7 @@ jobs:
       run: export R_HOME=/usr/local/bin/R
     - name: set windows R_HOME
       if: matrix.os == 'windows-latest'
-      run: $env:R_HOME=C:\R
+      run: $env:R_HOME="C:\R"
     - name: verify R
       run: Rscript -e '1+1'
     - uses: actions/checkout@master
