@@ -17,16 +17,13 @@ jobs:
     steps:
     - name: set mac R_HOME
       if: matrix.os == 'macOS-latest'
-      env: 
-        R_HOME: /Library/Frameworks/R.framework/Resources 
+      run: export R_HOME=/Library/Frameworks/R.framework/Resources 
     - name: set ubuntu R_HOME
       if: matrix.os == 'ubuntu-latest'
-      env: 
-        R_HOME: /usr/local/bin/R
+      run: export R_HOME=/usr/local/bin/R
     - name: set windows R_HOME
       if: matrix.os == 'windows-latest'
-      env: 
-        R_HOME: C:\R
+      run: $env:R_HOME=C:\R
     - name: verify R
       run: Rscript -e '1+1'
     - uses: actions/checkout@master
