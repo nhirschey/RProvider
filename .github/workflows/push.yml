@@ -7,12 +7,11 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest]
-
-    env: 
-      R_HOME: /Library/Frameworks/R.framework/Resources 
 
     steps:
     - uses: actions/checkout@master
@@ -20,7 +19,23 @@ jobs:
       name: Setup R environment
       with:
           r-version: '4.1.1'
-    - uses: actions/checkout@v2
+    - name: Set R_HOME environment variable
+      run:   |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              echo "R_HOME=$(R RHOME)" >> "$GITHUB_ENV"
+         elif [ "$RUNNER_OS" == "macOS" ]; then
+              echo "R_HOME=$(R RHOME)" >> "$GITHUB_ENV"
+         elif [ "$RUNNER_OS" == "Windows" ]; then
+              echo "R_HOME=$(R RHOME)" >> "$GITHUB_ENV"
+         else
+              echo "$RUNNER_OS not supported"
+              exit 1
+         fi
+      shell: bash
+    - name: Verify R Home
+      run: |
+        Rscript -e 'R.home()'
+        echo "${{ env.R_HOME }}"
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
