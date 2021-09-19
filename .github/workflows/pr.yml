@@ -52,7 +52,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore RProvider.Tests.sln
     - name: Build
-      timeout-minutes: 10
+      timeout-minutes: 5
       run: dotnet fake build -t All
     - name: Check R log
       run: cat rlog.txt
