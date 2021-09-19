@@ -9,6 +9,7 @@ jobs:
   build:
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -52,7 +53,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore RProvider.Tests.sln
     - name: Build
-      timeout-minutes: 5
       run: dotnet fake build -t All
     - name: Check R log
       run: cat rlog.txt
