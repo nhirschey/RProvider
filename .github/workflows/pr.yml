@@ -9,7 +9,6 @@ jobs:
   build:
 
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -22,7 +21,7 @@ jobs:
     - uses: r-lib/actions/setup-r@v1
       name: Setup R environment
       with:
-          r-version: '4.1.1'
+          r-version: '4.0.2'
     - name: Set R_HOME environment variable
       run:   |
          if [ "$RUNNER_OS" == "Linux" ]; then
@@ -53,6 +52,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore RProvider.Tests.sln
     - name: Build
+      timeout-minutes: 10
       run: dotnet fake build -t All
     - name: Check R log
       run: cat rlog.txt
