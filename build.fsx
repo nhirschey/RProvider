@@ -156,6 +156,12 @@ Target.create "CleanDocs" (fun _ -> Fake.IO.Shell.cleanDirs [ ".fsdocs" ])
 // Build library & test project
 
 Target.create
+    "Paket restore"
+    (fun _ -> 
+        let result = DotNet.exec id "paket" "restore" 
+        result.Messages |> List.iter Trace.log)
+
+Target.create
     "Build"
     (fun _ ->
         Trace.log " --- Building the app --- "
@@ -322,5 +328,7 @@ Target.create "All" ignore
 "Build" ==> "NuGet" ==> "All"
 "Build" ==> "All"
 "Build" ==> "BuildTests" ==> "RunTests" ==> "All"
+
+"Paket restore" ==> "All"
 
 Target.runOrDefault "All"
